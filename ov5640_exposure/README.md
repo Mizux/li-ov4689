@@ -1,12 +1,14 @@
 # Description
-With the Leopard firmware, we cannot achieved lowest exposure in manual exposure mode, needed for our use case.  
-According to the DataSheet exposure seems to be encoded on 19bits.  
-But Leopard Imaging firmware has only a range between \[0;400\] (please also notice **step** is wrong) 
+With the Leopard firmware, we cannot achieved small exposure time in manual exposure mode, required for our use case.  
+In manual exposure mode, range is too short (400), step is wrong and start with a min exposure too long.  
+
+According to the DataSheet exposure should be encoded on 19bits (i.e. register 0x3500~0x3502).  
+But Leopard Imaging firmware exposure_absolute control has only a range between \[0;400\] (please also notice **step** is wrong, 0 instead of 1) 
 ```sh
 v4l2-ctl -d /dev/video-top --all | grep exposure_absolute
 exposure_absolute (int)    : min=1 max=400 step=0 default=20 value=20 flags=inactive
 ```
-Further more values don't seems to be linear and start with a brightness too high.
+Further more values don't seems to be linear and start with an exposure time too high.
 
 ##Section 4.5 AEC/AGC algorithms
 table 4-4
