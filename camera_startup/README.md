@@ -22,6 +22,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test2;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -35,6 +43,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test3;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -52,6 +68,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test4;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -70,6 +94,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test5;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -88,6 +120,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test6;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -107,6 +147,14 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
+@enduml
+)
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+autonumber;
+actor Program;
+participant "Camera" as C;
 group Test7;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
