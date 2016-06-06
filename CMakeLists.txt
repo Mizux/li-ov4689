@@ -32,3 +32,4 @@ add_subdirectory(ov4689_images_latency)
 
 add_subdirectory(ov5640_resolution)
 add_subdirectory(ov5640_flip)
+add_subdirectory(ov5640_ext)

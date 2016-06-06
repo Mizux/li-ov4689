@@ -118,7 +118,6 @@ class CameraLIOV5640 : public Camera {
 
   void setFlip(int32_t value);
 
- protected:
   std::int32_t getExtUnit(std::uint8_t reg);
   std::int32_t setExtUnit(std::uint8_t reg, std::int32_t value);
 };
