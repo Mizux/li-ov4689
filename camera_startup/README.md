@@ -1,7 +1,7 @@
 # Description
-Is it currently impossible to restart camera once STREAM_OFF is call.
-We have too close/open the device again.
-note: first 4 images are empty due to an other issue (see **camera_first**).
+Is it currently impossible to restart camera once STREAM_OFF is call.  
+We have too close/open the device again.  
+note: first 4 images are empty due to an other issue (see **camera_queue**).
 
 Here the sequence diagram.  
 ![Alt text](http://g.gravizo.com/g?
