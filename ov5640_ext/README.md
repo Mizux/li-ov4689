@@ -15,7 +15,7 @@ fails, a log is printed.
 Execute the test program with the video device to test:
 
 ```sh
-$ ./ov5640_ext/ov5640_ext /dev/video0
+$ ./ov5640_ext/ov5640_ext -d /dev/video0 -loop 500
 (ERROR) Fails in loop 45: /dev/video0: UVC_GET_CUR 12 fails: Input/output error
 (ERROR) Fails in loop 69: /dev/video0: UVC_GET_CUR 12 fails: Input/output error
 (ERROR) Fails in loop 70: /dev/video0: UVC_SET_CUR 12 fails: Input/output error

@@ -32,7 +32,7 @@ main(int argc, char* argv[]) {
   for (int i = 0; i < loop; ++i) {
     try {
       std::int32_t value;
-      cam.openDevice(argv[1]);
+      cam.openDevice();
 
       const int numRegs(3);
       int regs[numRegs] = {HORIZONTAL_FLIP, VERTICAL_FLIP, TEST_PATTERN};
