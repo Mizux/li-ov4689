@@ -9,7 +9,6 @@ Here the sequence diagram.
 autonumber;
 actor Program;
 participant "Camera" as C;
-
 group Test1;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -23,7 +22,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test2;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -37,7 +35,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test3;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -53,7 +50,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test4;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -70,7 +66,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test5;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -87,7 +82,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test6;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -105,7 +99,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 group Test7;
 Program -> C: OpenDevice\(/dev/video0\);
 activate C;
@@ -123,7 +116,6 @@ Program -> C: UninitMmapStreaming\(\);
 Program -> C: CloseDevice\(\);
 destroy C;
 end;
-
 @enduml
 )
 
