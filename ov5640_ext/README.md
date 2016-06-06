@@ -10,15 +10,6 @@ We have reproduced this situation on Pepper robot (Linux 4.0.4) and on our deskt
 This test will querry 100 times some control extension unit (read and write access). When a query 
 fails, a log is printed.
 
-# How to build
-As any cmake project, it simple to build it.
-
-```sh
-$ mkdir build && cd build
-$ cmake ..
-$ make
-```
-
 # How to reproduce
 
 Execute the test program with the video device to test:

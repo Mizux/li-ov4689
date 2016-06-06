@@ -5,31 +5,29 @@ When option *--dump* is used, images are converted to RGB and stored using ppm (
 # LI-OV4689
 Current known issue for stereo camera aka OV4689x2 -> OV580 -> USB 3.0
 
-1) The camera timeout when trying to get the first image after a **STREAM_ON**
-in front of a bright scene (i.e. over exposure seems to be an issue at startup).  
-note: can be test with:
-```
-while true; do ./dev/bin/ov4689_full -d /dev/video0 -w 2560 -h 720 -fps 15 -loop 25; done
-```
-note: you can add *--verbose* option if you want more logs.  
+1. The camera timeout when trying to get the first image after a **STREAM_ON** if camera is over-exposed. (i.e. over exposure is an issue at startup **only**).  
+Please see the  **[ov4689_full](ov4689_full)** readme for further details.
 
-2) Could dump images to show image corruption.
-note: can be test with **ov4689_images** program (usually 3-5% on a run of 100 imgs !)
+2. It seems that *S_FMT* and *S_PARM* are order dependent. Thus setFramerate() must be done after setResolution().  
+Please see the  **[ov4689_order](ov4689_order)** readme for further details.
 
-4) It seems that *S_FMT* and *S_PARM* are order dependent. Thus setFramerate() must be done after setResolution().  
-note: can be test with **ov4689_order** program
+3. Usually first N images (with N equal to v4l2 queue buffer size) are empty.
+Please see the  **[ov4689_first](ov4689_first)** readme for further details.
 
 # LI-OV5640
 Current known issue for 2D camera aka OV5640 -> CX3 -> USB 3.0
 
-1) In manual exposure mode, range is too short (400) and start with a exposure too long.  
-Please see the **ov5640_exposure** readme for further details.
+1. In manual exposure mode, range is too short (400) and start with an exposure too long.  
+Please see the **[ov5640_exposure](ov5640_exposure)** readme for further details.
 
-2) Register state (e.g. flip) are lost when stream is stopped.  
-note: can be test with **ov5640_flip** program
+2. Sometime, UVC controls fails.  
+Please see the **[ov5640_ext](ov5640_ext)** readme for further details.
 
-3) We can't change resolution once the stream is stopped, you have to close and reopen the device. -> it seems the firmware do ugly things in the stop streaming (which should be done in close function).  
-note: can be test with **ov5640_resolution** program
+3. Register state (e.g. flip) are lost when stream is stopped.  
+Please see the **[ov5640_flip](ov5640_flip)** readme for further details.
+
+4. We can't change resolution once the stream is stopped, you have to close and reopen the device. -> it seems the firmware do ugly things in the stop streaming (which should be done in close function).  
+Please see the **[ov5640_resolution](ov5640_resolution)** readme for frther details.
 
 # HowTo Build
 ## Dependencies
