@@ -29,7 +29,7 @@ Please see the **[ov5640_flip](ov5640_flip)** readme for further details.
 4. It seems that camera can't restart after a STREAM_OFF.  
 Please see the  **[camera_startup](camera_startup)** readme for further details.
 
-5. Usually first N images (with N equal to v4l2 queue buffer size) are empty.
+5. Usually first N images (with N equal to v4l2 queue buffer size) are empty.  
 Please see the  **[camera_queue](camera_queue)** readme for further details.
 
 # HowTo Build
