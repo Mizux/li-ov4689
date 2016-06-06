@@ -1,5 +1,5 @@
 # Description
-Is it currently impossible to restart camera once STREAM_OFF is call.  
+Is it currently impossible to update camera resolution (i.e. S_FMT) once STREAM_OFF is call.  
 We have too close/open the device again.  
 note: first 4 images are empty due to an other issue (see **camera_queue**).
 
@@ -180,132 +180,31 @@ end;
 # Testing
 You can test for ov4689 with:
 ```sh
-./dev/bin/camera_order -d /dev/video0 -w 2560 -h 720 --verbose
+./dev/bin/camera_startup -d /dev/video0 -w 2560 -h 720
 ```
+
+note: you can use *--verbose* if you want more trace
 
 Expect no error.
 Observed:
 ```
 Test1 (setRes, setFps, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock buffer, timecode:   3seq timestamp: 6313s, 704ms
-(VERBOSE) /dev/video-stereo: release buffer, timecode:   3seq
-(VERBOSE) /dev/video-stereo: write image FpsAfterRes.ppm
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
 Test1: DONE
 Test2 (setFps, setRes, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock buffer, timecode:  10seq timestamp: 6315s, 319ms
-(VERBOSE) /dev/video-stereo: release buffer, timecode:  10seq
-(VERBOSE) /dev/video-stereo: write image FpsBeforeRes.ppm
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
 Test2: DONE
 Test3 (stop, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: start streaming
-(ERROR) /dev/video-stereo: VIDIOC_DQBUF (17): Resource temporarily unavailable
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
-Test3: FAIL
+Test3: DONE
 Test4 (stop, setRes, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(ERROR) /dev/video-stereo: VIDIOC_S_FMT (5): Device or resource busy
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
+(ERROR) /dev/video-top: VIDIOC_S_FMT (5): Device or resource busy
 Test4: FAIL
 Test5 (stop, setFps, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: start streaming
-(ERROR) /dev/video-stereo: VIDIOC_DQBUF (17): Resource temporarily unavailable
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
-Test5: FAIL
+Test5: DONE
 Test6 (stop, setFps, setRes, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(ERROR) /dev/video-stereo: VIDIOC_S_FMT (5): Device or resource busy
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
+(ERROR) /dev/video-top: VIDIOC_S_FMT (5): Device or resource busy
 Test6: FAIL
 Test7 (stop, setRes, setFps, start): START
-(VERBOSE) /dev/video-stereo: open device
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(VERBOSE) /dev/video-stereo: set framerate to 15
-(VERBOSE) /dev/video-stereo: allocating memory (4 buffers)
-(VERBOSE) /dev/video-stereo: start streaming
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: lock and release buffer,  timecode:   0seq
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: set resolution to 2560x720
-(ERROR) /dev/video-stereo: VIDIOC_S_FMT (5): Device or resource busy
-(VERBOSE) /dev/video-stereo: stop streaming
-(VERBOSE) /dev/video-stereo: deallocating memory
-(VERBOSE) /dev/video-stereo: closing camera
+(ERROR) /dev/video-top: VIDIOC_S_FMT (5): Device or resource busy
 Test7: FAIL
 ```
 
+As we can, only tests which try to *setResolution()* after stream has been stop once will fail.
