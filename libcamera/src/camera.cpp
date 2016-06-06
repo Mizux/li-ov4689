@@ -3,18 +3,18 @@
 
 extern "C" {
 #include <fcntl.h>            // open
-#include <unistd.h>           // close
-#include <sys/mman.h>         // mmap
-#include <sys/ioctl.h>        // ioctl
-#include <linux/uvcvideo.h>   // UVC ExtUnit control
 #include <linux/usb/video.h>  // define UVC_*
+#include <linux/uvcvideo.h>   // UVC ExtUnit control
+#include <sys/ioctl.h>        // ioctl
+#include <sys/mman.h>         // mmap
+#include <unistd.h>           // close
 }
 #include <algorithm>
-#include <iostream>
-#include <iomanip>
-#include <stdexcept>
 #include <cstring>  // strerror
 #include <fstream>  // std::ofstream
+#include <iomanip>
+#include <iostream>
+#include <stdexcept>
 
 Camera::Camera(int argc, char** argv)
     : _device("/dev/video0")
@@ -24,7 +24,6 @@ Camera::Camera(int argc, char** argv)
     , _bufferNb(4)
     , _verbose(false)
     , _fd(-1) {
-
   if (cmdOptionExists(argc, argv, "-d")) {
     _device = getCmdOption(argc, argv, "-d");
   } else
@@ -101,15 +100,16 @@ Camera::openDevice(const std::string& deviceName) {
   _device = deviceName;
 }
 
-void Camera::setResolution() {
+void
+Camera::setResolution() {
   setResolution(_width, _height);
 }
 
 void
 Camera::setResolution(uint32_t w, uint32_t h) {
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": set resolution to " << w << "x" << h
-              << std::endl;
+    std::cout << "(VERBOSE) " << _device << ": set resolution to " << w << "x"
+              << h << std::endl;
   }
   struct v4l2_format fmt;
   ::memset(&fmt, 0, sizeof(fmt));
@@ -120,9 +120,11 @@ Camera::setResolution(uint32_t w, uint32_t h) {
   fmt.fmt.pix.pixelformat = getYUYVformat();
   fmt.fmt.pix.colorspace = V4L2_COLORSPACE_JPEG;
   if (-1 == ::ioctl(_fd, VIDIOC_S_FMT, &fmt)) {
-    throw std::runtime_error(_device + ": VIDIOC_S_FMT (" +
-                             std::to_string(_IOC_NR(VIDIOC_S_FMT)) +
-                             ") fails: " + std::strerror(errno));
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_S_FMT ("
+              << std::to_string(_IOC_NR(VIDIOC_S_FMT))
+              << "): " << std::strerror(errno) << std::endl;
+    throw std::runtime_error(_device + ": VIDIOC_S_FMT: " +
+                             std::strerror(errno));
   }
   _width = w;
   _height = h;
@@ -136,7 +138,8 @@ Camera::setFrameRate() {
 void
 Camera::setFrameRate(std::uint32_t frame) {
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": set framerate to " << frame << std::endl;
+    std::cout << "(VERBOSE) " << _device << ": set framerate to " << frame
+              << std::endl;
   }
   struct v4l2_streamparm parm;
   ::memset(&parm, 0, sizeof(parm));
@@ -147,6 +150,9 @@ Camera::setFrameRate(std::uint32_t frame) {
   parm.parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
   parm.parm.capture.extendedmode = 0;
   if (-1 == ::ioctl(_fd, VIDIOC_S_PARM, &parm)) {
+    std::cerr << "(ERROR) " << _device  << ": VIDIOC_S_PARM ("
+              << std::to_string(_IOC_NR(VIDIOC_S_PARM))
+              <<"): " << std::strerror(errno) << std::endl;
     throw std::runtime_error(_device + ": VIDIOC_S_PARM fails: " +
                              std::strerror(errno));
   }
@@ -162,8 +168,8 @@ void
 Camera::initMmapStreaming(int bufferCount) {
   _bufferNb = bufferCount;
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": allocating memory (" << _bufferNb << " buffers)"
-              << std::endl;
+    std::cout << "(VERBOSE) " << _device << ": allocating memory (" << _bufferNb
+              << " buffers)" << std::endl;
   }
   // First request a number of buffer.
   struct v4l2_requestbuffers req;
@@ -172,6 +178,9 @@ Camera::initMmapStreaming(int bufferCount) {
   req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
   req.memory = V4L2_MEMORY_MMAP;
   if (-1 == ::ioctl(_fd, VIDIOC_REQBUFS, &req)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_REQBUFS ("
+              << std::to_string(_IOC_NR(VIDIOC_REQBUFS))
+              << "): " << std::strerror(errno) << std::endl;
     throw std::runtime_error(_device + ": VIDIOC_REQBUFS fails: " +
                              std::strerror(errno));
   }
@@ -190,6 +199,9 @@ Camera::initMmapStreaming(int bufferCount) {
     buf.memory = V4L2_MEMORY_MMAP;
     buf.index = i;
     if (-1 == ::ioctl(_fd, VIDIOC_QUERYBUF, &buf)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_QUERYBUF ("
+              << std::to_string(_IOC_NR(VIDIOC_QUERYBUF))
+              << "): " << std::strerror(errno) << std::endl;
       throw std::runtime_error(_device + ": VIDIOC_QUERYBUF fails: " +
                                std::to_string(i) + ": " + std::strerror(errno));
     }
@@ -218,6 +230,9 @@ Camera::startStreaming() {
   }
   enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
   if (-1 == ::ioctl(_fd, VIDIOC_STREAMON, &type)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_STREAMON ("
+              << std::to_string(_IOC_NR(VIDIOC_STREAMON))
+              << "): " << std::strerror(errno) << std::endl;
     unInitMmapStreaming();
     throw std::runtime_error(_device + ": Cannot start streaming: " +
                              std::strerror(errno));
@@ -231,6 +246,9 @@ Camera::stopStreaming() {
   }
   enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
   if (-1 == ::ioctl(_fd, VIDIOC_STREAMOFF, &type)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_STREAMOFF ("
+              << std::to_string(_IOC_NR(VIDIOC_STREAMOFF))
+              << "): " << std::strerror(errno) << std::endl;
     unInitMmapStreaming();
     throw std::runtime_error(_device + ": Error stopping streaming: " +
                              std::strerror(errno));
@@ -240,7 +258,8 @@ Camera::stopStreaming() {
 void
 Camera::unInitMmapStreaming() {
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": deallocating memory" << std::endl;
+    std::cout << "(VERBOSE) " << _device << ": deallocating memory"
+              << std::endl;
   }
   bool success = true;
   for (auto& i : _v4l2Buffers) {
@@ -294,6 +313,9 @@ Camera::lockKernelBuffer() {
   }
 
   if (-1 == ::ioctl(_fd, VIDIOC_DQBUF, &buffer)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_DQBUF ("
+              << std::to_string(_IOC_NR(VIDIOC_DQBUF))
+              << "): " << std::strerror(errno) << std::endl;
     throw std::runtime_error(
         _device + ": Cannot dequeue v4l2 buffer from kernel ring buffer: " +
         strerror(errno));
@@ -318,6 +340,9 @@ Camera::releaseKernelBuffer(v4l2_buffer& buffer) {
               << "seq" << std::endl;
   }
   if (-1 == ::ioctl(_fd, VIDIOC_QBUF, &buffer)) {
+    std::cerr << "(ERROR) " << _device << ": VIDIOC_QBUF ("
+              << std::to_string(_IOC_NR(VIDIOC_QBUF))
+              << "): " << std::strerror(errno) << std::endl;
     throw std::runtime_error(_device + ": Cannot release v4l2 buffer: " +
                              strerror(errno));
   }
@@ -337,6 +362,9 @@ Camera::flushBuffer() {
                 << "seq" << std::endl;
     }
     if (-1 == ::ioctl(_fd, VIDIOC_QBUF, &buffer)) {
+      std::cerr << "(ERROR) " << _device << ": VIDIOC_QBUF ("
+                << std::to_string(_IOC_NR(VIDIOC_QBUF))
+                << "): " << std::strerror(errno) << std::endl;
       throw std::runtime_error(_device + ": Cannot release v4l2 buffer: " +
                                strerror(errno));
     }
@@ -395,7 +423,8 @@ Camera::writePPM(const std::string& fileName) {
   std::uint8_t* data = buffer.get();
 
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": write image " << fileName << std::endl;
+    std::cout << "(VERBOSE) " << _device << ": write image " << fileName
+              << std::endl;
   }
   std::ofstream ofs;
   ofs.open(fileName, std::ofstream::out | std::ios_base::binary);
@@ -423,7 +452,8 @@ Camera::writeBuffer2PPM(const std::string& fileName,
                         std::uint32_t height,
                         std::uint8_t* data) {
   if (_verbose) {
-    std::cout << "(VERBOSE) " << "Write image " << fileName << std::endl;
+    std::cout << "(VERBOSE) "
+              << "Write image " << fileName << std::endl;
   }
 
   std::ofstream ofs;
@@ -486,15 +516,17 @@ void
 CameraLIOV5640::setFlip(std::int32_t value) {
   std::int32_t hflip = getExtUnit(0x0c);
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": set horizontal flip (current: " << hflip
+    std::cout << "(VERBOSE) " << _device
+              << ": set horizontal flip (current: " << hflip
               << ", new:" << value << ")" << std::endl;
   }
   setExtUnit(0x0c, value);
 
   std::int32_t vflip = getExtUnit(0x0d);
   if (_verbose) {
-    std::cout << "(VERBOSE) " << _device << ": set vertical flip (current: " << vflip
-              << ", new:" << value << ")" << std::endl;
+    std::cout << "(VERBOSE) " << _device
+              << ": set vertical flip (current: " << vflip << ", new:" << value
+              << ")" << std::endl;
   }
   setExtUnit(0x0d, value);
 }
