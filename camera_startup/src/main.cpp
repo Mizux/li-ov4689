@@ -65,6 +65,8 @@ int main(int argc, char* argv[]) {
     cam.flushBuffer();
     // stop camera, then restart it.
     cam.stopStreaming();
+    cam.unInitMmapStreaming();
+    cam.initMmapStreaming();
     cam.startStreaming();
     std::this_thread::sleep_for(
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
@@ -90,9 +92,11 @@ int main(int argc, char* argv[]) {
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
     cam.flushBuffer();
     cam.stopStreaming();
+    cam.unInitMmapStreaming();
 
     cam.setResolution();
 
+    cam.initMmapStreaming();
     cam.startStreaming();
     std::this_thread::sleep_for(
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
@@ -118,9 +122,11 @@ int main(int argc, char* argv[]) {
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
     cam.flushBuffer();
     cam.stopStreaming();
+    cam.unInitMmapStreaming();
 
     cam.setFrameRate();
 
+    cam.initMmapStreaming();
     cam.startStreaming();
     std::this_thread::sleep_for(
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
@@ -146,10 +152,12 @@ int main(int argc, char* argv[]) {
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
     cam.flushBuffer();
     cam.stopStreaming();
+    cam.unInitMmapStreaming();
 
     cam.setFrameRate();
     cam.setResolution();
 
+    cam.initMmapStreaming();
     cam.startStreaming();
     std::this_thread::sleep_for(
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
@@ -175,10 +183,12 @@ int main(int argc, char* argv[]) {
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer
     cam.flushBuffer();
     cam.stopStreaming();
+    cam.unInitMmapStreaming();
 
     cam.setResolution();
     cam.setFrameRate();
 
+    cam.initMmapStreaming();
     cam.startStreaming();
     std::this_thread::sleep_for(
         std::chrono::milliseconds(1000 * (cam.bufferNb()+2) / cam.fps())); // Fill all buffer

@@ -1,4 +1,4 @@
-set(_NAME ov5640_resolution)
+set(_NAME camera_startup)
 
 file(GLOB_RECURSE _SRCS "src/*.[hc]pp")
 if(ENABLE_QIBUILD)

@@ -8,11 +8,11 @@ Current known issue for stereo camera aka OV4689x2 -> OV580 -> USB 3.0
 1. The camera timeout when trying to get the first image after a **STREAM_ON** if camera is over-exposed. (i.e. over exposure is an issue at startup **only**).  
 Please see the  **[ov4689_full](ov4689_full)** readme for further details.
 
-2. It seems that *S_FMT* and *S_PARM* are order dependent. Thus setFramerate() must be done after setResolution().  
-Please see the  **[ov4689_order](ov4689_order)** readme for further details.
+2. It seems that camera can't restart after a STREAM_OFF.  
+Please see the  **[camera_startup](camera_startup)** readme for further details.
 
 3. Usually first N images (with N equal to v4l2 queue buffer size) are empty.
-Please see the  **[ov4689_first](ov4689_first)** readme for further details.
+Please see the  **[camera_queue](camera_queue)** readme for further details.
 
 # LI-OV5640
 Current known issue for 2D camera aka OV5640 -> CX3 -> USB 3.0
@@ -26,8 +26,11 @@ Please see the **[ov5640_ext](ov5640_ext)** readme for further details.
 3. Register state (e.g. flip) are lost when stream is stopped.  
 Please see the **[ov5640_flip](ov5640_flip)** readme for further details.
 
-4. We can't change resolution once the stream is stopped, you have to close and reopen the device. -> it seems the firmware do ugly things in the stop streaming (which should be done in close function).  
-Please see the **[ov5640_resolution](ov5640_resolution)** readme for frther details.
+4. It seems that camera can't restart after a STREAM_OFF.  
+Please see the  **[camera_startup](camera_startup)** readme for further details.
+
+5. Usually first N images (with N equal to v4l2 queue buffer size) are empty.
+Please see the  **[camera_queue](camera_queue)** readme for further details.
 
 # HowTo Build
 ## Dependencies

@@ -22,14 +22,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(libcamera)
 
-add_subdirectory(ov4689_first)
+# Problems on both cameras
+add_subdirectory(camera_startup)
+add_subdirectory(camera_queue)
+
+# Problem specific to ov4689
 add_subdirectory(ov4689_full)
 add_subdirectory(ov4689_longterm)
-add_subdirectory(ov4689_order)
 add_subdirectory(ov4689_timestamp)
 add_subdirectory(ov4689_images)
 add_subdirectory(ov4689_images_latency)
 
-add_subdirectory(ov5640_resolution)
+# Problem specific to ov5640
 add_subdirectory(ov5640_flip)
 add_subdirectory(ov5640_ext)

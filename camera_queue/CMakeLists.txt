@@ -1,4 +1,4 @@
-set(_NAME ov4689_first)
+set(_NAME camera_queue)
 
 file(GLOB_RECURSE _SRCS "src/*.[hc]pp")
 if(ENABLE_QIBUILD)
