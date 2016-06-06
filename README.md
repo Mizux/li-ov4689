@@ -5,8 +5,9 @@ When option *--dump* is used, images are converted to RGB and stored using ppm (
 # LI-OV4689
 Current known issue for stereo camera aka OV4689x2 -> OV580 -> USB 3.0
 
-1. The camera timeout when trying to get the first image after a **STREAM_ON** if camera is over-exposed. (i.e. over exposure is an issue at startup **only**).  
-Please see the  **[ov4689_full](ov4689_full)** readme for further details.
+1. **CRITICAL**: The camera timeout when trying to get the first image after a **STREAM_ON** if camera is over-exposed. (i.e. over exposure is an issue at startup **only**).  
+Please see the  **[ov4689_full](ov4689_full)** readme for further details.  
+**ERRATUM: Fixed by OV580SpecificFW_20160523.bin**
 
 2. It seems that camera can't set Resolution (i.e. S_FMT) after a STREAM_OFF.  
 Please see the  **[camera_startup](camera_startup)** readme for further details.
@@ -17,10 +18,10 @@ Please see the  **[camera_queue](camera_queue)** readme for further details.
 # LI-OV5640
 Current known issue for 2D camera aka OV5640 -> CX3 -> USB 3.0
 
-1. In manual exposure mode, range is too short (400) and start with an exposure too long.  
+1. **CRITICAL**: In manual exposure mode, range is too short (400), step is wrong and start with a min exposure too long.  
 Please see the **[ov5640_exposure](ov5640_exposure)** readme for further details.
 
-2. Sometime, UVC controls fails.  
+2. **CRITICAL**: Sometime, UVC controls fails.  
 Please see the **[ov5640_ext](ov5640_ext)** readme for further details.
 
 3. Register state (e.g. flip) are lost when stream is stopped.  
