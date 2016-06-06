@@ -11,7 +11,7 @@ Please see the  **[ov4689_full](ov4689_full)** readme for further details.
 2. It seems that camera can't restart after a STREAM_OFF.  
 Please see the  **[camera_startup](camera_startup)** readme for further details.
 
-3. Usually first N images (with N equal to v4l2 queue buffer size) are empty.
+3. Usually first N images (with N equal to v4l2 queue buffer size) are empty.  
 Please see the  **[camera_queue](camera_queue)** readme for further details.
 
 # LI-OV5640
