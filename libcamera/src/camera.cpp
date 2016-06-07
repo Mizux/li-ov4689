@@ -17,7 +17,7 @@ extern "C" {
 #include <stdexcept>
 
 Camera::Camera(int argc, char** argv)
-    : _device("/dev/video0")
+    : _device()
     , _width(640)
     , _height(480)
     , _fps(15)
@@ -26,8 +26,10 @@ Camera::Camera(int argc, char** argv)
     , _fd(-1) {
   if (cmdOptionExists(argc, argv, "-d")) {
     _device = getCmdOption(argc, argv, "-d");
-  } else
-    throw std::runtime_error("missing device file (e.g. /dev/video0)");
+  } else {
+    std::cerr << "(ERROR) missing device file (e.g. -d /dev/video0)" << std::endl;
+    throw std::runtime_error("missing device file");
+  }
 
   if (cmdOptionExists(argc, argv, "-w")) {
     _width = std::atoi(getCmdOption(argc, argv, "-w").c_str());
