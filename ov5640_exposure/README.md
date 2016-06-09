@@ -1,14 +1,13 @@
 # Description
 With the Leopard firmware for camera CX3-OV5640, we cannot achieve small exposure time in manual exposure mode, required for our use case.  
-In manual exposure mode, range is too short (400), step is wrong and start with a min exposure too long.  
+In manual exposure mode, range is too short (400), step is wrong and minimum value has an exposure time too long.  
 
-According to the DataSheet exposure should be encoded on 19bits (i.e. register 0x3500~0x3502).  
+According to the Omnivision OV5640 DataSheet exposure should be encoded on 19bits (i.e. register 0x3500~0x3502).  
 But Leopard Imaging firmware exposure_absolute control has only a range between \[0;400\] (please also notice **step** is wrong, 0 instead of 1) 
 ```sh
-v4l2-ctl -d /dev/video-top --all | grep exposure_absolute
+$ v4l2-ctl -d /dev/video-top --all | grep exposure_absolute
 exposure_absolute (int)    : min=1 max=400 step=0 default=20 value=20 flags=inactive
 ```
-Further more values don't seems to be linear and start with an exposure time too high.
 
 ##Section 4.5 AEC/AGC algorithms
 table 4-4
@@ -20,7 +19,7 @@ Address | Register name | default value | R/W | description
 0x3502  | AEC PK EXPOSURE | 0x00  | RW  | Exposure Output Bit[7:0]: Exposure[7:0] Lower four bits are a fraction of a line; they should be 0 since OV5640 does not support fraction line exposure
 
 ## Measurement
-We have done some measurement of illuminance in manual exposure with the same scene, between the aldebaran ov5640 driver/solution and the leopard one.
+We have done some measurement of average brightness in manual exposure with the same scene, between the Aldebaran OV5640 driver/solution and the Leopard one.
 
 Here the measurement with Aldebaran Driver that you can found here
 [Aldebaran OV5640 driver](https://github.com/aldebaran/linux-aldebaran/blob/release-2.5.x/atom/drivers/media/i2c/soc_camera/ov5640.c#L1557).  
@@ -30,7 +29,9 @@ Here the measurement with Aldebaran Driver that you can found here
 Here, the measurement with the Leopard solution.
 ![Leopard FW](leopard_fw.png)
 
-As you can see, leopard driver is much brighter even with the minimum value and we can observe some level step...  
+As you can see, leopard driver produce images "too bright" even with the minimum value...  
+Further more values don't seems to be linear and have some step level...  
+
 For our use case, we must have **small exposure time** capability for OV5640 !
 
 ## Aldebaran Implementation
