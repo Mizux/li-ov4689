@@ -1,5 +1,5 @@
 # Description
-With the Leopard firmware, we cannot achieved small exposure time in manual exposure mode, required for our use case.  
+With the Leopard firmware for camera CX3-OV5640, we cannot achieve small exposure time in manual exposure mode, required for our use case.  
 In manual exposure mode, range is too short (400), step is wrong and start with a min exposure too long.  
 
 According to the DataSheet exposure should be encoded on 19bits (i.e. register 0x3500~0x3502).  
@@ -31,7 +31,7 @@ Here, the measurement with the Leopard solution.
 ![Leopard FW](leopard_fw.png)
 
 As you can see, leopard driver is much brighter even with the minimum value and we can observe some level step...  
-For our use case, we must have low exposure capability for OV5640 !
+For our use case, we must have **small exposure time** capability for OV5640 !
 
 ## Aldebaran Implementation
 Please find here, the aldebaran implementation, you should have something similar...  
