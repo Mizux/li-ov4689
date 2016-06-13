@@ -2,14 +2,30 @@
 With the Leopard firmware for camera CX3-OV5640, we cannot achieve small exposure time in manual exposure mode, required for our use case.  
 In manual exposure mode, range is too short (400), step is wrong and minimum value has an exposure time too long.  
 
-According to the Omnivision OV5640 DataSheet exposure should be encoded on 19bits (i.e. register 0x3500~0x3502).  
-But Leopard Imaging firmware exposure_absolute control has only a range between \[0;400\] (please also notice **step** is wrong, 0 instead of 1) 
+# Validation Test
+To validate the implementation, we compare the return of V4L2 querying function with what we expect.
 ```sh
 $ v4l2-ctl -d /dev/video-top --all | grep exposure_absolute
-exposure_absolute (int)    : min=1 max=400 step=0 default=20 value=20 flags=inactive
+```
+## Observed
+```sh
+exposure_absolute (int)    : min=1 max=400 step=0 default=20
+```
+## Expected
+```sh
+exposure_absolute (int)    : min=0 max=65536 step=1 default=32
+```
+Range has been determined according to the Omnivision Datasheet.It is critical for our use case to be able to use the smallest exposure configuration and having a fine grain on exposure control.
+
+# Annexe
+## DataSheet OV5640
+According to the Omnivision OV5640 DataSheet exposure should be encoded on 19bits with last four bits set to zero. (i.e. register 0x3500~0x3502).  
+But Leopard Imaging firmware exposure_absolute control has only a range between \[0;400\] (please also notice **step** is wrong, 0 instead of 1) 
+```sh
+
 ```
 
-##Section 4.5 AEC/AGC algorithms
+###Section 4.5 AEC/AGC algorithms
 table 4-4
 
 Address | Register name | default value | R/W | description
