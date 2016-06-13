@@ -11,11 +11,24 @@ $ v4l2-ctl -d /dev/video-top --all | grep exposure_absolute
 ```sh
 exposure_absolute (int)    : min=1 max=400 step=0 default=20
 ```
+aka
+* minimum exposure: 1
+* maximum exposure: 400 /!\ (why ?)
+* step: 0 /!\ (must be strictly positif!)
+* default: 20 /!\
+
 ## Expected
 ```sh
 exposure_absolute (int)    : min=0 max=65536 step=1 default=32
 ```
-Range has been determined according to the Omnivision Datasheet.It is critical for our use case to be able to use the smallest exposure configuration and having a fine grain on exposure control.
+aka
+* minimum exposure: 0
+* maximum exposure: 65536 (i.e. 0xFFFF)
+* step: 1
+* default: 32 (aka 0x20 cf. DataSheet)
+
+Range has been determined according to the Omnivision Datasheet.  
+It is critical for our use case to be able to use the smallest exposure configuration and having a fine grain on exposure control.
 
 # Annexe
 ## DataSheet OV5640
