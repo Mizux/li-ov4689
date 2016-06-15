@@ -489,6 +489,8 @@ CameraLIOV5640::getExtUnit(std::uint8_t reg) {
   queryctrl.size = 2;
   queryctrl.data = data;
   if (-1 == ::ioctl(_fd, UVCIOC_CTRL_QUERY, &queryctrl)) {
+    std::cerr << "(ERROR) " << _device << ": UVC_GET_CUR fails: "
+              << std::strerror(errno) << std::endl;
     throw std::runtime_error(_device + ": UVC_GET_CUR fails: " +
                              std::strerror(errno));
   }
@@ -509,6 +511,8 @@ CameraLIOV5640::setExtUnit(std::uint8_t reg, std::int32_t value) {
   queryctrl.size = 2;
   queryctrl.data = data;
   if (-1 == ::ioctl(_fd, UVCIOC_CTRL_QUERY, &queryctrl)) {
+    std::cerr << "(ERROR) " << _device << ": UVC_SET_CUR fails: "
+              << std::strerror(errno) << std::endl;
     throw std::runtime_error(_device + ": UVC_SET_CUR fails: " +
                              std::strerror(errno));
   }
@@ -531,4 +535,55 @@ CameraLIOV5640::setFlip(std::int32_t value) {
               << ")" << std::endl;
   }
   setExtUnit(0x0d, value);
+}
+
+void CameraLIOV5640::setAutoExposure(bool enable) {
+  struct v4l2_control control;
+  ::memset(&control, 0, sizeof(control));
+  control.id = V4L2_CID_EXPOSURE_AUTO;
+  if (enable)
+    control.value = V4L2_EXPOSURE_AUTO;
+  else
+    control.value = V4L2_EXPOSURE_MANUAL;
+
+  if (_verbose) {
+   std::cout << "(VERBOSE) " << _device
+             << ": set AutoExposure to " << enable << std::endl;
+  }
+  if (-1 == ::ioctl(_fd, VIDIOC_S_CTRL, &control)) {
+    throw std::runtime_error(_device + ": setAutoExposure fails: " +
+                             std::strerror(errno));
+  }
+}
+
+void CameraLIOV5640::setExposure(std::int32_t value) {
+  struct v4l2_control control;
+  ::memset(&control, 0, sizeof(control));
+  control.id = V4L2_CID_EXPOSURE_ABSOLUTE;
+  control.value = value;
+
+  if (_verbose) {
+   std::cout << "(VERBOSE) " << _device
+             << ": set Exposure to " << value << std::endl;
+  }
+  if (-1 == ::ioctl(_fd, VIDIOC_S_CTRL, &control)) {
+    throw std::runtime_error(_device + ": setExposure fails: " +
+                             std::strerror(errno));
+  }
+}
+
+void CameraLIOV5640::setGain(std::int32_t value) {
+  struct v4l2_control control;
+  ::memset(&control, 0, sizeof(control));
+  control.id = V4L2_CID_GAIN;
+  control.value = value;
+
+  if (_verbose) {
+   std::cout << "(VERBOSE) " << _device
+             << ": set Gain to " << value << std::endl;
+  }
+  if (-1 == ::ioctl(_fd, VIDIOC_S_CTRL, &control)) {
+    throw std::runtime_error(_device + ": setGain fails: " +
+                             std::strerror(errno));
+  }
 }

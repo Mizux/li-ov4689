@@ -116,7 +116,10 @@ class CameraLIOV5640 : public Camera {
   CameraLIOV5640(int argc, char** argv): Camera(argc, argv) {}
   virtual ~CameraLIOV5640() = default;
 
-  void setFlip(int32_t value);
+  void setFlip(std::int32_t value);
+  void setAutoExposure(bool enable);
+  void setExposure(std::int32_t value);
+  void setGain(std::int32_t value);
 
   std::int32_t getExtUnit(std::uint8_t reg);
   std::int32_t setExtUnit(std::uint8_t reg, std::int32_t value);

@@ -34,5 +34,6 @@ add_subdirectory(ov4689_images)
 add_subdirectory(ov4689_images_latency)
 
 # Problem specific to ov5640
+add_subdirectory(ov5640_exposure)
 add_subdirectory(ov5640_flip)
 add_subdirectory(ov5640_ext)
