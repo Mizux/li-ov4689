@@ -28,15 +28,13 @@ add_subdirectory(camera_queue)
 
 # Problem specific to ov4689
 add_subdirectory(ov4689_full)
-add_subdirectory(ov4689_longterm)
-add_subdirectory(ov4689_order)
-add_subdirectory(ov4689_timestamp)
 add_subdirectory(ov4689_images)
 add_subdirectory(ov4689_images_latency)
-add_subdirectory(ov4689_first)
+add_subdirectory(ov4689_longterm)
+add_subdirectory(ov4689_timestamp)
 
 # Problem specific to ov5640
 add_subdirectory(ov5640_exposure)
-add_subdirectory(ov5640_resolution)
-add_subdirectory(ov5640_flip)
 add_subdirectory(ov5640_ext)
+add_subdirectory(ov5640_flip)
+add_subdirectory(ov5640_resolution)
