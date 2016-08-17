@@ -1,0 +1,10 @@
+set(_NAME ov4689_images_latency)
+
+file(GLOB_RECURSE _SRCS "src/*.[hc]pp")
+if(ENABLE_QIBUILD)
+  qi_create_bin(${_NAME} ${_SRCS})
+  qi_use_lib(${_NAME} camera)
+else()
+  add_executable(${_NAME} ${_SRCS})
+  target_link_libraries(${_NAME} camera)
+endif()
