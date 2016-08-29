@@ -15,22 +15,22 @@ Please see the  **[camera_startup](camera_startup)** readme for further details.
 3. Usually first N images (with N equal to v4l2 queue buffer size) are empty.  
 Please see the  **[camera_queue](camera_queue)** readme for further details.
 
+4. It seems that *S_FMT* and *S_PARM* are order dependent. Thus setFramerate must done after setResolution
+note: can be test with **ov4689_order** program
+
 # LI-OV5640
 Current known issue for 2D camera aka OV5640 -> CX3 -> USB 3.0
 
-1. **CRITICAL**: In manual exposure mode, range is too short (400), step is wrong and start with a min exposure too long.  
-Please see the **[ov5640_exposure](ov5640_exposure)** readme for further details.
-
-2. **CRITICAL**: Sometime, UVC controls fails.  
+1. **CRITICAL**: Sometime, UVC controls fails.  
 Please see the **[ov5640_ext](ov5640_ext)** readme for further details.
 
-3. Register state (e.g. flip) are lost when stream is stopped.  
+2. Register state (e.g. flip) are lost when stream is stopped.
 Please see the **[ov5640_flip](ov5640_flip)** readme for further details.
 
-4. It seems that camera can't set Resolution (i.e. S_FMT) after a STREAM_OFF.  
+3. It seems that camera can't set Resolution (i.e. S_FMT) after a STREAM_OFF.  
 Please see the  **[camera_startup](camera_startup)** readme for further details.
 
-5. Usually first N images (with N equal to v4l2 queue buffer size) are empty.  
+4. Usually first N images (with N equal to v4l2 queue buffer size) are empty.  
 Please see the  **[camera_queue](camera_queue)** readme for further details.
 
 # HowTo Build
@@ -61,7 +61,7 @@ qibuild deploy -c juliette --url nao@ip.of.the.robot:~/foo
 On robot:
 ```sh
 ssh nao@ip.of.the.robot
-./foo/bin/ov4689_full -d /dev/video-stereo -w 2560 -h 720 -fps 15
+./foo/bin/ov4689_full -d /dev/videoX -w 640 -h 480 -fps 15
 ```
 
 ### Retrieve images
